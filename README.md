@@ -20,6 +20,8 @@ This area contains clean, verified Malloy assets ready for consumption.
 * **AI & Business Interface:** Acts as the entry point for business users and AI Agents to query data using natural language.
 * **Simplified:** Technical complexity is hidden so users and AI agents only see defined metrics and tables.
 
+## Malloy Publisher Demo: https://malloy-publisher-bolcwt6srq-nn.a.run.app/
+
 ---
 
 ## 🚀 Workflow
