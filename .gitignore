@@ -8,4 +8,5 @@ publisher_data/
 A_Semantic_Layer/0_data/thelook.duckdb
 
 # Optional: Large data files
-*.parquet
+# *.parquet
+A_Semantic_Layer/0_data/README.md
