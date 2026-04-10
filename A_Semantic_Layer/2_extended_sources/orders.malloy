@@ -1,0 +1,8 @@
+##! experimental.access_modifiers
+import '../../A_Semantic_Layer/1_sources/orders.malloy'
+
+
+source: orders is orders_source include { 
+   *
+   private: users_raw 
+}

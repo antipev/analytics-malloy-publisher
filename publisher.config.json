@@ -1,0 +1,22 @@
+{
+  "projects": [
+    {
+      "name": "theLook eCommerce - Unified Star Schema Model - DEMO",
+      "connections": [
+        {
+          "name": "thelook",
+          "type": "duckdb",
+          "duckdbConnection": {
+            "databasePath": "/app/A_Semantic_Layer/0_data/thelook.duckdb"
+          }
+        }
+      ],
+      "packages": [
+        {
+          "name": "B_Published_Semantic_Layer",
+          "location": "./B_Published_Semantic_Layer"
+        }
+      ]
+    }
+  ]
+}

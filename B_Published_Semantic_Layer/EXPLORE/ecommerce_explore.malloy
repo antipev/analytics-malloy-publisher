@@ -1,0 +1,7 @@
+
+
+import "/home/maxantipev/analytics-malloy-publisher/A_Semantic_Layer/3_models/bridge_model.malloy" 
+
+
+source: ecommerce_explore is bridge_model 
+

@@ -1,0 +1,25 @@
+# 1. Ignore the source data folders (the red circle in your image)
+A_Semantic_Layer/0_data/*
+# ...EXCEPT for the database itself!
+!A_Semantic_Layer/0_data/thelook.duckdb
+# Add this for the config file:
+!A_Semantic_Layer/0_data/config.malloy
+
+# 2. Ignore Malloy Publisher's local state
+publisher.db*
+.publisher.db*
+publisher_data/
+
+
+# 3. Ignore DuckDB temporary spill files
+**/*.tmp/
+**/duckdb_temp_storage_*
+**/*.duckdb.tmp/
+
+# 4. Standard Development Bloat
+.git/
+.gitignore
+node_modules/
+.vscode/
+.DS_Store
+*.log

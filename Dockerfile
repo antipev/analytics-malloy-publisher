@@ -1,0 +1,51 @@
+FROM node:20-slim
+
+# Install dependencies
+RUN apt-get update && apt-get install -y procps curl unzip && rm -rf /var/lib/apt/lists/*
+
+# Install DuckDB CLI
+RUN curl -L https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cli-linux-amd64.zip -o duckdb.zip \
+    && unzip duckdb.zip -d /usr/local/bin \
+    && rm duckdb.zip
+
+RUN npm install -g @malloy-publisher/server@0.0.180
+
+WORKDIR /app
+COPY . /app/
+
+# Create a symlink so absolute paths from your MSI work inside Docker
+RUN mkdir -p /home/maxantipev/ && ln -s /app /home/maxantipev/analytics-malloy-publisher
+# ---------------------------
+
+ENV PROJECT_NAME="theLook eCommerce - Unified Star Schema Model - DEMO"
+ENV DEST="/app/publisher_data/${PROJECT_NAME}"
+
+# Cleanup & Structure Setup
+RUN rm -rf publisher_data/ publisher.db* .publisher.db* && \
+    mkdir -p "${DEST}/"
+
+# Copy layers into the project destination
+RUN cp -r /app/A_Semantic_Layer /app/B_Published_Semantic_Layer "${DEST}/"
+
+# Keep your specific EXPLORE fix (this helps the Publisher find the entry points)
+RUN find /app -path "*/EXPLORE/*.malloy" -type f -exec sed -i 's|/home/maxantipev/analytics-malloy-publisher/|/app/|g' {} +
+RUN find /app -name "*.malloy_view" -type f -exec sed -i 's|main\.||g' {} +
+
+# Verification
+RUN cp /app/A_Semantic_Layer/0_data/thelook.duckdb "${DEST}/thelook.duckdb" && \
+    echo "--- LOGGING: Database File Info ---" && \
+    ls -lh "${DEST}/thelook.duckdb" && \
+    echo "--- LOGGING: DuckDB Table List ---" && \
+    duckdb "${DEST}/thelook.duckdb" -c "PRAGMA show_tables;"
+
+EXPOSE 8080
+
+
+CMD ["npx", "@malloy-publisher/server", \
+     "--server_root", "/app", \
+     "--port", "8080", \
+     "--host", "0.0.0.0", \
+     "--path", "/app/B_Published_Semantic_Layer/"]
+
+
+

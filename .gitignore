@@ -1,0 +1,11 @@
+# Databases
+*.duckdb
+*.db
+*.db.wal
+
+# Data folders
+publisher_data/
+A_Semantic_Layer/0_data/thelook.duckdb
+
+# Optional: Large data files
+*.parquet
