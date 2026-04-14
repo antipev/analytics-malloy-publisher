@@ -50,20 +50,17 @@ EXPOSE 8080
 #      "--mcp"]
 
 # malloy-publisher-ui
+CMD ["npx", "@malloy-publisher/server", \
+     "--server_root", "/app", \
+     "--port", "8080", \
+     "--host", "0.0.0.0", \
+     "--path", "/app/B_Published_Semantic_Layer/"]
+
+# malloy-publisher-mcp
+# ENV MALLOY_SERVER_MODE=mcp
 # CMD ["npx", "@malloy-publisher/server", \
 #      "--server_root", "/app", \
 #      "--port", "8080", \
 #      "--host", "0.0.0.0", \
-#      "--path", "/app/B_Published_Semantic_Layer/"]
-
-# malloy-publisher-mcp
-ENV MALLOY_SERVER_MODE=mcp
-CMD ["npx", "@malloy-publisher/server", \
-     "--server_root", "/app", \
-     "--port", "8080", \
-     "--mcp-port", "5050", \
-     "--host", "0.0.0.0", \
-     "--path", "/app/B_Published_Semantic_Layer/", \
-     "--mcp"]
-
-
+#      "--path", "/app/B_Published_Semantic_Layer/", \
+#      "--mcp"]

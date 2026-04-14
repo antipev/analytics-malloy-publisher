@@ -21,6 +21,7 @@ This area contains clean, verified Malloy assets ready for consumption.
 * **Simplified:** Technical complexity is hidden so users and AI agents only see defined metrics and tables.
 
 ## Malloy Publisher Demo: https://malloy-publisher-bolcwt6srq-nn.a.run.app/
+## Malloy MCP Demo:       https://malloy-publisher-mcp-bolcwt6srq-nn.a.run.app/
 
 ---
 
