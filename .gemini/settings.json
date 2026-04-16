@@ -1,0 +1,19 @@
+{
+  "ide": {
+    "hasSeenNudge": true,
+    "enabled": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "mcpServers": {
+    "malloy-cloud": {
+      "url": "https://malloy-publisher-mcp-bolcwt6srq-nn.a.run.app/mcp",
+      "headers": {
+        "Accept": "application/json, text/event-stream"
+      }
+    }
+  }
+}
