@@ -39,8 +39,9 @@ This area contains clean, verified Malloy assets ready for consumption.
 
 
 ## 🤖 Gemini AI Setup
-Objective 1: to use AI agent for coding => Technical users, Aanlysts, Engeneers
-Objective 2: to use AI agent for quering MCP Server => for Analysts, Business Users (if UI for Gemeni CLI is available)
+Objective 1: to use AI agent for coding => Technical users, Aanlysts, Engineers
+
+Objective 2: to use AI agent for quering MCP Server => for Analysts, Business Users
 
 ### Step 1: Install NVM
 Run this command in your terminal to download and install NVM:
@@ -54,8 +55,9 @@ To make the nvm command available without closing and reopening your terminal, r
 ```
 Bash
 source ~/.bashrc
-(Note: If you are using Zsh instead of Bash, run source ~/.zshrc instead).
 ```
+(Note: If you are using Zsh instead of Bash, run source ~/.zshrc instead).
+
 
 ### Step 3: Install Node.js
 Now, you can install the latest Long Term Support (LTS) version of Node.js, which is fully compatible with the Gemini CLI:
@@ -138,7 +140,10 @@ Launch the CLI by running:
 ```
 Bash
 gemini
+```
 Once the prompt is ready, type the following built-in slash command to check your active servers:
+
+```
 Bash
 /mcp list
 ```
@@ -155,4 +160,4 @@ Follow these guide here:
 https://geminicli.com/docs/cli/skills/
 https://geminicli.com/docs/cli/creating-skills/
 
-For this particular case current repository contains `.gemini` folder (usually outside of this repository, but for this case added to repository for convenience) with "malloy-query-best-practices" skill for testing
+For this particular case current repository contains [View Gemini Configuration](./.gemini/) folder (usually outside of this repository, but for this case added to repository for convenience) with "malloy-query-best-practices" skill for testing
