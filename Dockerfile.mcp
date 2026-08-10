@@ -8,7 +8,7 @@ RUN curl -L https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cl
     && unzip duckdb.zip -d /usr/local/bin \
     && rm duckdb.zip
 
-RUN npm install -g @malloy-publisher/server@0.0.180
+RUN npm install -g @malloy-publisher/server@0.0.240
 
 WORKDIR /app
 COPY . /app/

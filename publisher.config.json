@@ -1,5 +1,5 @@
 {
-  "projects": [
+  "environments": [
     {
       "name": "theLook eCommerce - Unified Star Schema Model - DEMO",
       "connections": [

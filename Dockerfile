@@ -8,7 +8,7 @@ RUN curl -L https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cl
     && unzip duckdb.zip -d /usr/local/bin \
     && rm duckdb.zip
 
-RUN npm install -g @malloy-publisher/server@0.0.180
+RUN npm install -g @malloy-publisher/server@0.0.240
 
 WORKDIR /app
 COPY . /app/
@@ -50,20 +50,17 @@ EXPOSE 8080
 #      "--mcp"]
 
 # malloy-publisher-ui
+CMD ["npx", "@malloy-publisher/server", \
+     "--server_root", "/app", \
+     "--port", "8080", \
+     "--host", "0.0.0.0", \
+     "--path", "/app/B_Published_Semantic_Layer/"]
+
+# malloy-publisher-mcp
+# ENV MALLOY_SERVER_MODE=mcp
 # CMD ["npx", "@malloy-publisher/server", \
 #      "--server_root", "/app", \
 #      "--port", "8080", \
 #      "--host", "0.0.0.0", \
-#      "--path", "/app/B_Published_Semantic_Layer/"]
-
-# malloy-publisher-mcp
-ENV MALLOY_SERVER_MODE=mcp
-CMD ["npx", "@malloy-publisher/server", \
-     "--server_root", "/app", \
-     "--port", "8080", \
-     "--mcp-port", "5050", \
-     "--host", "0.0.0.0", \
-     "--path", "/app/B_Published_Semantic_Layer/", \
-     "--mcp"]
-
-
+#      "--path", "/app/B_Published_Semantic_Layer/", \
+#      "--mcp"]
