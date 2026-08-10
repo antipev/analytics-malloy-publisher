@@ -33,7 +33,8 @@ RUN find /app -path "*/EXPLORE/*.malloy" -type f -exec sed -i 's|/home/maxantipe
 RUN find /app -name "*.malloy_view" -type f -exec sed -i 's|main\.||g' {} +
 
 # Copy raw parquet data into the served package so the per-package duckdb sandbox can read it
-RUN cp -r /app/A_Semantic_Layer/0_data /app/B_Published_Semantic_Layer/
+RUN mkdir -p /app/B_Published_Semantic_Layer/A_Semantic_Layer \
+    && cp -r /app/A_Semantic_Layer/0_data /app/B_Published_Semantic_Layer/A_Semantic_Layer/
 
 EXPOSE 8080
 
