@@ -72,6 +72,7 @@ This is important if `joins` were performed on previous stage (`/1_sources/` or 
     - `adhoc/`: Rapid, one-off queries and experimental analysis.
     - `dashboards/`: Production-ready dashboard definitions and visualizations.
     - `use_cases/`: Deep-dive analysis focused on specific business problems.
+    - **Static Data Apps:** Export finished `.html` reports/dashboards here, then copy them into the published package's `public/` folder to serve them via Malloy Publisher (see root `README.md` → *Publishing Static HTML Data Apps*).
 
 ---
 

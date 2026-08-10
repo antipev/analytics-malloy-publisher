@@ -32,6 +32,18 @@ This area contains clean, verified Malloy assets ready for consumption.
 
 ---
 
+## 📄 Publishing Static HTML Data Apps
+
+Static report HTML files can be served by Malloy Publisher with no build step — just drop them in the package's `public/` folder:
+
+1. **Place files:** Copy your `.html` reports into `B_Published_Semantic_Layer/public/` (e.g. `fulfillment_centers_2026.html`, `top_products_2026.html`).
+2. **Serve:** Publisher serves every file under `public/` at `/environments/<env>/packages/<pkg>/<file>`.
+3. **Redeploy:** Rebuild + redeploy the Docker image — the `public/` folder is included automatically.
+
+> Only `public/` is web-served; models, data, and `publisher.json` stay private.
+
+---
+
 ## 🔗 Resources
 * [Malloy Official Docs](https://docs.malloydata.dev/)
 * [Modeling Best Practices](https://docs.malloydata.dev/documentation/language/modeling)
