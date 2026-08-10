@@ -32,12 +32,8 @@ RUN cp -r /app/A_Semantic_Layer /app/B_Published_Semantic_Layer "${DEST}/"
 RUN find /app -path "*/EXPLORE/*.malloy" -type f -exec sed -i 's|/home/maxantipev/analytics-malloy-publisher/|/app/|g' {} +
 RUN find /app -name "*.malloy_view" -type f -exec sed -i 's|main\.||g' {} +
 
-# Verification
-RUN cp /app/A_Semantic_Layer/0_data/thelook.duckdb "${DEST}/thelook.duckdb" && \
-    echo "--- LOGGING: Database File Info ---" && \
-    ls -lh "${DEST}/thelook.duckdb" && \
-    echo "--- LOGGING: DuckDB Table List ---" && \
-    duckdb "${DEST}/thelook.duckdb" -c "PRAGMA show_tables;"
+# Copy raw parquet data into the served package so the per-package duckdb sandbox can read it
+RUN cp -r /app/A_Semantic_Layer/0_data /app/B_Published_Semantic_Layer/
 
 EXPOSE 8080
 
