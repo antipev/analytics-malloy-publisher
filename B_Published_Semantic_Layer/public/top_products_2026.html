@@ -1,123 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malloy Query Results: Top 5 Products by Revenue (2026)</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .query-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        pre {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #fff;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        th {
-            background-color: #f8f9fa;
-            color: #555;
-            font-weight: 600;
-        }
-        tr:hover {
-            background-color: #fcfcfc;
-        }
-        .currency {
-            text-align: right;
-            font-family: monospace;
-        }
-        .status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: bold;
-            background-color: #d4edda;
-            color: #155724;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Products by Revenue (2026)</title>
+<style>
+  :root{
+    --brand:#2c3e50; --brand2:#9b59b6; --accent:#e74c3c;
+    --bg:#f4f6f8; --card:#ffffff; --border:#e3e8ee; --muted:#6b7683;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:#22303c;line-height:1.55}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+  header h1{margin:0 0 4px;font-size:28px;color:var(--brand)}
+  header p{margin:0 0 20px;color:var(--muted);max-width:760px}
+  .badge{display:inline-block;padding:5px 12px;border-radius:999px;background:#e8f5e9;color:#1b5e20;
+         font-weight:600;font-size:13px;margin-bottom:18px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+       box-shadow:0 1px 3px rgba(20,40,70,.06)}
+  .kpi .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .kpi .val{font-size:22px;font-weight:700;margin-top:4px}
+  .kpi .sub{font-size:13px;color:var(--muted)}
+  .controls{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:22px;
+            display:flex;flex-wrap:wrap;gap:16px;align-items:center;box-shadow:0 1px 3px rgba(20,40,70,.06)}
+  .ctl{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+  .ctl input[type=text],.ctl select{border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:14px;min-width:170px}
+  .ctl input[type=range]{width:170px;accent-color:var(--brand2)}
+  .ctl .rangeval{font-weight:600;color:var(--brand)}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:22px;
+         box-shadow:0 1px 3px rgba(20,40,70,.06)}
+  .panel h3{margin:0 0 10px;font-size:16px;color:var(--brand)}
+  .panel .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .panel .hdr h3{margin:0}
+  .btn{border:1px solid var(--brand2);background:#fff;color:var(--brand2);border-radius:8px;padding:8px 14px;
+       font-size:14px;font-weight:600;cursor:pointer}
+  .btn:hover{background:var(--brand2);color:#fff}
+  .chartwrap{position:relative;height:360px}
+  table{width:100%;border-collapse:collapse;background:var(--card)}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border)}
+  th{background:#f8fafc;color:#52616e;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.3px}
+  td.cur{text-align:right;font-variant-numeric:tabular-nums}
+  tr:hover{background:#f8fbfd}
+  .bar{height:8px;border-radius:6px;background:linear-gradient(90deg,#9b59b6,#c39bd3);min-width:2px}
+  details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-top:22px}
+  details summary{cursor:pointer;font-weight:600;color:var(--brand)}
+  details pre{background:#282c34;color:#abb2bf;padding:14px;border-radius:8px;overflow-x:auto;font-size:13px}
+  footer{margin-top:26px;font-size:12px;color:var(--muted)}
+  .empty{color:var(--muted);text-align:center;padding:20px}
+</style>
 </head>
 <body>
-    <h1>Top 5 Products by Revenue (2026)</h1>
-    <p><strong>Business Question:</strong> Retrieve the top 5 products with the highest revenue for the year 2026.</p>
-    
-    <div class="query-card">
-        <h3>Executed Malloy Query</h3>
-        <pre><code>run: ecommerce_explore -> {
+<div class="wrap">
+  <header>
+    <h1>Top Products by Revenue — 2026</h1>
+    <p>Which items brought in the most money last year? This dashboard highlights the top-selling products of 2026
+       by revenue. Use the filters to narrow it down, or download the list as a CSV.</p>
+    <span class="badge">Data refreshed · 2026</span>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="controls">
+    <div class="ctl"><label for="search">Search product</label>
+      <input type="text" id="search" placeholder="e.g. Jacket"></div>
+    <div class="ctl"><label for="minrev">Min revenue: <span class="rangeval" id="minrevval">$1,800</span></label>
+      <input type="range" id="minrev" min="1800" max="3300" step="50" value="1800"></div>
+    <div class="ctl"><label for="sort">Sort by</label>
+      <select id="sort"><option value="rev">Revenue (high → low)</option><option value="name">Name (A–Z)</option></select></div>
+  </section>
+
+  <section class="panel">
+    <div class="hdr"><h3>Revenue by product</h3></div>
+    <div class="chartwrap"><canvas id="revChart"></canvas></div>
+  </section>
+
+  <section class="panel">
+    <div class="hdr"><h3>Product details</h3><button class="btn" id="csvBtn">Download CSV</button></div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Product Name</th><th style="text-align:right">Revenue</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+
+  <details>
+    <summary>How this was calculated (for the data folks)</summary>
+    <p style="color:var(--muted);font-size:14px">Built with a Malloy query against the <code>ecommerce_explore</code> model.
+       It filters order items to 2026, groups by product name, and sums revenue, keeping the top five.</p>
+    <pre><code>run: ecommerce_explore -> {
   where: order_items.Created_at ~ f`2026`
   group_by: products.Name
   aggregate: order_items.Total_Revenue
   order_by: Total_Revenue desc
   limit: 5
 }</code></pre>
-    </div>
+  </details>
 
-    <div class="status">Query Executed Successfully via MCP</div>
+  <footer>Generated for demo · Malloy Publisher data app</footer>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th style="text-align: right;">Total Revenue (2026)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Canada Goose Men's The Chateau Jacket</td>
-                <td class="currency">$3,260.00</td>
-            </tr>
-            <tr>
-                <td>NIKE WOMEN'S PRO COMPRESSION SPORTS BRA *Outstanding Support and Comfort*</td>
-                <td class="currency">$2,709.00</td>
-            </tr>
-            <tr>
-                <td>Darla</td>
-                <td class="currency">$1,998.00</td>
-            </tr>
-            <tr>
-                <td>Diesel Men's Zathan Regular Bootcut Jean</td>
-                <td class="currency">$1,811.60</td>
-            </tr>
-            <tr>
-                <td>The North Face Denali Down Mens Jacket 2013</td>
-                <td class="currency">$1,806.00</td>
-            </tr>
-        </tbody>
-    </table>
+<script src="vendor/chart.umd.js"></script>
+<script>
+  const DATA = [
+    {name:"Canada Goose Men's The Chateau Jacket", revenue:3260.00},
+    {name:"NIKE WOMEN'S PRO COMPRESSION SPORTS BRA *Outstanding Support and Comfort*", revenue:2709.00},
+    {name:"Darla", revenue:1998.00},
+    {name:"Diesel Men's Zathan Regular Bootcut Jean", revenue:1811.60},
+    {name:"The North Face Denali Down Mens Jacket 2013", revenue:1806.00}
+  ];
 
-    <p style="margin-top: 40px; font-size: 0.9em; color: #777;">
-        <em>Generated by Gemini CLI using Malloy-Cloud MCP</em>
-    </p>
+  const money = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+  const moneyK = n => "$" + Math.round(n).toLocaleString();
+
+  const els = {
+    kpis: document.getElementById("kpis"),
+    rows: document.getElementById("rows"),
+    search: document.getElementById("search"),
+    minrev: document.getElementById("minrev"),
+    minrevval: document.getElementById("minrevval"),
+    sort: document.getElementById("sort")
+  };
+
+  const revChart = new Chart(document.getElementById("revChart"), {
+    type:"bar",
+    data:{ labels:[], datasets:[{label:"Revenue", data:[], backgroundColor:"#9b59b6", borderRadius:5 }]},
+    options:{ indexAxis:"y", responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{callback:v=>moneyK(v)}}}} }
+  );
+
+  function current(){
+    let list = DATA.slice();
+    const q = els.search.value.trim().toLowerCase();
+    if(q) list = list.filter(d => d.name.toLowerCase().includes(q));
+    list = list.filter(d => d.revenue >= Number(els.minrev.value));
+    if(els.sort.value === "name") list.sort((a,b)=>a.name.localeCompare(b.name));
+    else list.sort((a,b)=>b.revenue-a.revenue);
+    return list;
+  }
+
+  function render(){
+    const list = current();
+    const total = list.reduce((s,d)=>s+d.revenue,0);
+    const top = list.length ? list[0] : null;
+    const avg = list.length ? total/list.length : 0;
+    els.kpis.innerHTML =
+      kpi("Total Revenue", money(total), list.length + " products") +
+      kpi("Top Product", top ? top.name.split(" ")[0] : "—", top ? money(top.revenue) : "No results") +
+      kpi("Products", String(list.length), "of " + DATA.length) +
+      kpi("Avg / Product", money(avg), "across " + list.length + " items");
+
+    revChart.data.labels = list.map(d=>d.name);
+    revChart.data.datasets[0].data = list.map(d=>d.revenue);
+    revChart.update();
+
+    els.rows.innerHTML = list.length ? list.map(d =>
+      `<tr><td>${d.name}</td><td class="cur"><div class="bar" style="width:${Math.max(2, d.revenue/Math.max(...list.map(x=>x.revenue))*100)}%;"></div>${money(d.revenue)}</td></tr>`
+    ).join("") : `<tr><td colspan="2" class="empty">No products match your filters</td></tr>`;
+  }
+
+  function kpi(lbl, val, sub){ return `<div class="kpi"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="sub">${sub}</div></div>`; }
+
+  function downloadCSV(){
+    const list = current();
+    if(!list.length){ alert("Nothing to download with current filters."); return; }
+    const header = ["Product Name","Revenue"];
+    const rows = list.map(d => [d.name, d.revenue.toFixed(2)]);
+    const csv = [header, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "top_products_2026.csv";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }
+
+  els.minrevval.textContent = moneyK(Number(els.minrev.value));
+  ["search","minrev","sort"].forEach(id => document.getElementById(id).addEventListener("input", () => {
+    if(id==="minrev") els.minrevval.textContent = moneyK(Number(els.minrev.value));
+    render();
+  }));
+  document.getElementById("csvBtn").addEventListener("click", downloadCSV);
+  render();
+</script>
 </body>
 </html>
